@@ -11,3 +11,7 @@ table .btnedit{
 body{
     background-color: lightgray;
 }
+
+table {
+    margin: 50px 0;
+}
