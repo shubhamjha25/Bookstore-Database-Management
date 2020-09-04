@@ -15,3 +15,13 @@ body{
 table {
     margin: 50px 0;
 }
+
+.success{
+    background-color: lightgreen;
+    padding: 1em;
+}
+
+.error{
+    background-color: tomato;
+    padding: 1em;
+}

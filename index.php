@@ -1,5 +1,6 @@
 <?php 
     require_once("../book-crud/php/components.php");
+    require_once("../book-crud/php/crud_operations.php");
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +34,7 @@
             <div class="d-flex justify-content-center">
                 <form action="" method="post" class="w-50">
                     <div class="py-2">
-                        <?php  inputElement("<i class='fas fa-id-badge'></i>", "ID", "book_id", "");   ?>  
+                        <?php  inputElement("<i class='fas fa-id-badge'></i>", "ID", "book_id", setID());   ?>  
                     </div>
                     <div class="pt-2">
                         <?php  inputElement("<i class='fas fa-book'></i>", "Book Name", "book_name", "");   ?>
@@ -52,7 +53,7 @@
                         <?php buttonElement("btn-read","btn btn-primary","<i class='fas fa-sync'></i>","read","data-toggle='tooltip' data-placement='bottom' title='Read'"); ?>
                         <?php buttonElement("btn-update","btn btn-light border","<i class='fas fa-pen-alt'></i>","update","data-toggle='tooltip' data-placement='bottom' title='Update'"); ?>
                         <?php buttonElement("btn-delete","btn btn-danger","<i class='fas fa-trash-alt'></i>","delete","data-toggle='tooltip' data-placement='bottom' title='Delete'"); ?>
-                        
+                        <?php deleteBtn(); ?>
                     </div>
                    
                 </form>
@@ -72,14 +73,31 @@
                         </tr>
                     </thead>
 
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>MERN Stack</td>
-                            <td>ABC Publication</td>
-                            <td>350</td>
-                            <td><i class="fas fa-edit btnedit"></i></td>
-                        </tr>
+                    <tbody id="tbody">
+                        <?php
+
+                            if(isset($_POST['read'])){
+                                $result = getData();
+
+                                if($result){
+
+                                    while ($row = mysqli_fetch_assoc($result)){ ?>
+
+                                        <tr>
+                                            <td data-id="<?php echo $row['id']; ?>"><?php echo $row['id']; ?></td>
+                                            <td data-id="<?php echo $row['id']; ?>"><?php echo $row['book_name']; ?></td>
+                                            <td data-id="<?php echo $row['id']; ?>"><?php echo $row['book_publisher']; ?></td>
+                                            <td data-id="<?php echo $row['id']; ?>"><?php echo 'Rs. ' . $row['book_price']; ?></td>
+                                            <td><i class="fas fa-edit btnedit" data-id="<?php echo $row['id']; ?>"></i></td>
+                                        </tr>
+
+                            <?php
+                                    }
+
+                                }
+                            }
+
+                        ?>
                     </tbody>
                     
                 </table>       
@@ -87,6 +105,9 @@
 
         </div>
     </main>
+
+    <!-- Custom JS File -->
+    <script src="app.js"></script>
 
     <!-- Bootstrap JS CDN -->  
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
